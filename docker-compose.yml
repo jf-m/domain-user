@@ -1,0 +1,12 @@
+name: domain-user
+services:
+  domain-user:
+    container_name: domain-user
+    entrypoint:
+      - /bin/bash
+    volumes:
+      - .:/app/
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: -c "composer install && vendor/bin/phpstan analyse -c phpstan.neon.dist && vendor/bin/phpunit  --coverage-text"
