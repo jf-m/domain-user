@@ -4,5 +4,5 @@
 /.gitignore export-ignore
 /phpunit.xml.dist export-ignore
 /Dockerfile export-ignore
-/cmd-dev.sh export-ignore
+/docker-compose.yml export-ignore
 /.github

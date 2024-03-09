@@ -29,5 +29,5 @@ jobs:
           max_attempts: 5
           command: composer install --no-interaction --no-progress
 
-      - name: Execute type checking
+      - name: Execute PHPStan
         run: vendor/bin/phpstan --configuration="phpstan.neon.dist"
