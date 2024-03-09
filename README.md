@@ -1,3 +1,5 @@
+# domain-user
+
 Framework agnostic PHP wrapper around reqres APIs.
 
 # Installation
@@ -19,7 +21,24 @@ $this->app->bind(UserServiceInterface::class, function (Application $app) {
 });
 ```
 
-Then use Dependency Injection within your own service.
+## Symfony example
+
+Example of implementation with Symfony.
+
+
+```php
+// config/services.php
+return function(ContainerConfigurator $container): void {
+    $services = $container->services();
+
+    $services->set(UserService::class)
+        ->args([service('logger')->nullOnInvalid()]);
+};
+```
+
+# Usage 
+Use Dependency Injection to use this package's methods
+
 Example:
 
 ```php
@@ -30,34 +49,34 @@ class MyService {
         $this->userService = $userService;
     }
     
-    public function getUserFromId(int $id): UserDTO {
+    public function getUserFromId(int $id): ?UserDTO {
         return $this->userService->getUserFromId($id);
     }
 
 }
 ```
 
-# Usage
+# Definition
 
 ## Methods
 
-| Name                | Description                                                   | Returns                                           |
-|---------------------|---------------------------------------------------------------|---------------------------------------------------|
+| Name                | Description                                                   | Returns                                             |
+|---------------------|---------------------------------------------------------------|-----------------------------------------------------|
 | `getUserFromId`     | Retrieve a user from a user's `int $id`.                      | Return a `UserDTO` or null if the user is not found |
-| `createUser`        | Creates a user with a `string $name` and `string $job`.       | Return the user ID                                |
-| `getUsersPaginated` | Retrieve a paginated list of users from a `int $page` number. | Returns a `UserPaginatedListDTO`                        |
+| `createUser`        | Creates a user with a `string $name` and `string $job`.       | Return the user ID                                  |
+| `getUsersPaginated` | Retrieve a paginated list of users from a `int $page` number. | Returns a `UserPaginatedListDTO`                    |
 
 ## DTO
 
 ### UserDTO
 
-| Property    | Type    | Comment |
-|-------------|---------|---------|
-| `id`        | Integer |         |
-| `email`     | String  |         |
-| `firstName` | String  |         |
-| `lastName`  | String  |         |
-| `avatar`    | String  |         |
+| Property    | Type    | 
+|-------------|---------|
+| `id`        | Integer |
+| `email`     | String  |
+| `firstName` | String  |
+| `lastName`  | String  |
+| `avatar`    | String  |
 
 ### UserPaginatedListDTO
 
@@ -71,13 +90,13 @@ class MyService {
 
 ## Exceptions
 
-| Name                             | Description                                                                          |
-|----------------------------------|--------------------------------------------------------------------------------------|
-| `DomainBaseException`            | Default exception, all exception of this module will inherit this class        |
+| Name                             | Description                                                                        |
+|----------------------------------|------------------------------------------------------------------------------------|
+| `DomainBaseException`            | Default exception, all exception of this module will inherit this class            |
 | `HttpException`                  | Http exception, occurs when the distant API server returns HTTP errors 4xx or 5xxx |
-| `HttpNotFoundException`          | Extends `HttpException` to handle specifically HTTP 404 exceptions                   |
-| `NetworkException`               | The server could not be reached or the request could not be sent                     |
-| `UnexpectedApiResponseException` | The distant API returned an unexpected or invalid response                           |
+| `HttpNotFoundException`          | Extends `HttpException` to handle specifically HTTP 404 exceptions                 |
+| `NetworkException`               | The server could not be reached or the request could not be sent                   |
+| `UnexpectedApiResponseException` | The distant API returned an unexpected or invalid response                         |
 
 # Contribution
 
