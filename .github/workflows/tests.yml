@@ -30,4 +30,4 @@ jobs:
           command: composer install --no-interaction --no-progress
 
       - name: Execute tests
-        run: vendor/bin/phpunit --coverage-text"
+        run: vendor/bin/phpunit --coverage-text
